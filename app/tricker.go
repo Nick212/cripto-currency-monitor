@@ -8,35 +8,35 @@ import (
 	"github.com/Nick212/cripto-currency-monitor/models/foxbit"
 )
 
-func (a *App) GetTricker(token string) (*foxbit.ResponseTricker, error) {
-	computer := foxbit.ResponseTricker{}
+func (a *App) GetTricker() (*foxbit.ResponseTicker, error) {
+	tricker := foxbit.ResponseTicker{}
 
-	url := "https://api.amp.cisco.com/v1/computers"
+	url := a.Config.HOST_API + "Ticker?exchange=Foxbit&Pair=BRLXBTC"
 	method := "GET"
 
 	client := &http.Client{}
 	req, err := http.NewRequest(method, url, nil)
 
 	if err != nil {
-		return &computer, err
+		return &tricker, err
 	}
 
-	req.Header.Add("Authorization", "Basic "+token)
+	// req.Header.Add("Authorization", "Basic "+token)
 	req.Header.Add("Content-Type", "application/json")
 	req.Header.Add("Accept", "application/json")
 
 	res, err := client.Do(req)
 	if err != nil {
-		return &computer, err
+		return &tricker, err
 	}
 	defer res.Body.Close()
 
 	body, err := ioutil.ReadAll(res.Body)
 	if err != nil {
-		return &computer, err
+		return &tricker, err
 	}
 
-	err = json.Unmarshal(body, &computer)
+	err = json.Unmarshal(body, &tricker)
 
-	return &computer, err
+	return &tricker, err
 }

@@ -19,7 +19,6 @@ func (a *App) NewContext(version, languageID, requestID, IP string) *Context {
 		RequestID:  requestID,
 		Version:    version,
 		IP:         IP,
-		HTTPPrefix: a.Config.HTTPPrefix,
 	}
 }
 
